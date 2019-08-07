@@ -1,19 +1,55 @@
-import React from 'react';
-import './App.css';
+import React, {useState, useEffect} from "react";
+import axios from 'axios'
+import styled from 'styled-components';
 
-const App = () => {
-  // Try to think through what state you'll need for this app before starting. Then build out
-  // the state properties here.
+const WrapperDiv = styled.div`
+font-family: 'Lobster', cursive;
+font-size:25px;
+color:white;
+border:5px solid white;
+text-align:center;
 
-  // Fetch characters from the star wars api in an effect hook. Remember, anytime you have a 
-  // side effect in a component, you want to think about which state and/or props it should
-  // sync up with, if any.
 
-  return (
-    <div className="App">
-      <h1 className="Header">React Wars</h1>
-    </div>
-  );
-}
+`;
+
+
+
+function App () { 
+  const [data, setData] = useState();
+ 
+
+
+   useEffect(() => {
+    axios 
+    .get('https://swapi.co/api/people')
+    .then(res => setData (res.data))
+   
+    .catch(err => console.log(err))
+   }, [ ])
+  
+
+if(!data) return <div> Loading...</div>
+//console.log("this is data", data.results[0].name); // evals to Luke Skywalker
+
+
+let newData = data.results;
+
+console.log(newData[0].name) // success: also evaluates to Luke Skywalker
+
+
+return (
+ 
+    <WrapperDiv>
+{newData.map((props,index )=> <h1 key={props.name + "-" + index}>Name: {props.name} </h1>)} 
+{newData.map((props, index) => <h1 key={props.height + "-" + index}> Height: {props.height} </h1>)} 
+{newData.map((props, index) => <h1 key={props.mass + "-" + index}> Mass: {props.mass} </h1>)}
+
+    </WrapperDiv>
+  );} 
+
+
+
 
 export default App;
+//<FirstComponent name={data.name} tall={data.height} mass={data.mass} skin={data.skin_color} eyes={data.eye_color} birthday={data.birth_year}  sex={data.gender} home={data.homeworld} films={data.films}  />
+

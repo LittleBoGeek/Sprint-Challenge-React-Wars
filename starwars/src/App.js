@@ -11,6 +11,20 @@ font-family:papyrus;
 font-style:italic;
 `; 
 
+const Character = props =>{
+  return (
+    props.characters.map((props) => 
+    <p>{props.name} 
+    {props.species}
+    {props.status}
+    <img src={props.image} alt="char pictures"/>
+
+    </p>
+   
+    )
+  )
+}
+
 function App () {
   const [characters, setCharacters] = useState([]); // Setting up state
   useEffect(() => {
@@ -28,19 +42,25 @@ function App () {
     getCallFunction(); // calling our function
   }, []);
 
- 
 
-  return (
-    <Div>
-      <h2>Characters</h2>
-          {characters.map(character => (
-          <div key={character.id}> Name: {character.name} Species: {character.species} Status: {character.status} <img src={character.image} alt="char pictures"/>
+ return (
+     <Div>
+       {/* <h2>Characters</h2>
+           {characters.map(character => (
+           <div key={character.id}> Name: {
+             character.name} 
+            Species: {character.species} 
+             Status: {character.status}
+              <img src={character.image} alt="char pictures"/>
            
-          </div>
-        ))}
+           </div>
+         ))} */}
+
+         <Character characters={characters}/>
   
     </Div>
-  );
-}
+   );
+ }
+
 
 export default App;

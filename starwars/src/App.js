@@ -9,14 +9,16 @@ const ColorChange = styled.h1`
 text-align:center;
 color:white;
   margin: 0;
-  font-family: 'Concert One', cursive;
-  font-size: 45px;
+  font-family:Bangers, cursive;
+  font-size: 75px;
   animation-name: animate;
   animation-duration: 10s;
   animation-direction: alternate;
   animation-iteration-count: infinite;            
   padding:40px;
   line-height:1.5;
+  letter-spacing:7px;
+
 
 }
 @keyframes animate {

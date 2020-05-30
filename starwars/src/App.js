@@ -1,19 +1,66 @@
-import React from 'react';
-import './App.css';
+import React, { useEffect, useState } from "react"; // importing React, useEffect for axios call and useState hook to set up state 
+import axios from "axios";
+import styled from 'styled-components';
 
-const App = () => {
-  // Try to think through what state you'll need for this app before starting. Then build out
-  // the state properties here.
+//styling 
+const Div = styled.div` 
+font-size:35px;
+color:white;
+font-weight:200;
+font-family:papyrus;
+font-style:italic;
+`; 
 
-  // Fetch characters from the star wars api in an effect hook. Remember, anytime you have a 
-  // side effect in a component, you want to think about which state and/or props it should
-  // sync up with, if any.
-
+const Character = props =>{
   return (
-    <div className="App">
-      <h1 className="Header">React Wars</h1>
-    </div>
-  );
+    props.characters.map((props) => 
+    <p>{props.name} 
+    {props.species}
+    {props.status}
+    <img src={props.image} alt="char pictures"/>
+
+    </p>
+   
+    )
+  )
 }
+
+function App () {
+  const [characters, setCharacters] = useState([]); // Setting up state
+  useEffect(() => {
+    const getCallFunction = () => {
+      axios
+        .get(`https://rickandmortyapi.com/api/character/`)
+        .then(response => {
+          setCharacters(response.data.results);
+        })
+        .catch(error => {
+          console.log("Error message", error);
+        });
+    };
+
+    getCallFunction(); // calling our function
+  }, []);
+
+
+ return (
+     <Div>
+       {/* <h2>Characters</h2>
+           {characters.map(character => (
+           <div key={character.id}> Name: {
+             character.name} 
+            Species: {character.species} 
+             Status: {character.status}
+              <img src={character.image} alt="char pictures"/>
+           
+           </div>
+         ))} */}
+
+         <Character characters={characters}/>
+  
+    </Div>
+   );
+ }
+
 
 export default App;
